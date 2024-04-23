@@ -1,44 +1,62 @@
-# ElevenLabs Python Library
+# ElevenLabs Python-Bibliothek
 
 ![LOGO](https://github.com/elevenlabs/elevenlabs-python/assets/12028621/21267d89-5e82-4e7e-9c81-caf30b237683)
 
-[![fern shield](https://img.shields.io/badge/%F0%9F%8C%BF-SDK%20generated%20by%20Fern-brightgreen)](https://buildwithfern.com/?utm_source=fern-elevenlabs/elevenlabs-python/readme)
+[![fern shield](https://img.shields.io/badge/%F0%9F%8C%BF-SDK%20von%20Fern%20erzeugt-brightgreen)](https://buildwithfern.com/?utm_source=fern-elevenlabs/elevenlabs-python/readme)
 [![Discord](https://badgen.net/badge/black/ElevenLabs/icon?icon=discord&label)](https://discord.gg/elevenlabs)
 [![Twitter](https://badgen.net/badge/black/elevenlabsio/icon?icon=twitter&label)](https://twitter.com/elevenlabsio)
 [![PyPI - Python Version](https://img.shields.io/pypi/v/elevenlabs?style=flat&colorA=black&colorB=black)](https://pypi.org/project/elevenlabs/)
 [![Downloads](https://static.pepy.tech/personalized-badge/elevenlabs?period=total&units=international_system&left_color=black&right_color=black&left_text=Downloads)](https://pepy.tech/project/elevenlabs)
 
-The official Python API for [ElevenLabs](https://elevenlabs.io/) [text-to-speech software.](https://elevenlabs.io/text-to-speech) Eleven brings the most compelling, rich and lifelike voices to creators and developers in just a few lines of code.
+Die offizielle Python-API für [ElevenLabs](https://elevenlabs.io/) [Text-zu-Sprache-Software.](https://elevenlabs.io/text-to-speech) Eleven bringt mit nur wenigen Codezeilen die überzeugendsten, reichhaltigsten und lebensechtesten Stimmen für Kreative und Entwickler.
 
-## 📖 API & Docs
+## 📖 API & Dokumentation
 
-Check out the [HTTP API documentation](https://elevenlabs.io/docs/api-reference).
+Sieh dir die [HTTP-API-Dokumentation](https://elevenlabs.io/docs/api-reference) an.
 
-## ⚙️ Install
+## ⚙️ Installation
 
 ```bash
 pip install elevenlabs==0.3.0b0
-```
 
-## V3 Migration Guide
-> The SDK was rewritten in v3 and is now programatically generated from our OpenAPI spec. As part of this release 
-> there are some breaking changes. 
+Check out the [HTTP API documentation](https://elevenlabs.io/docs/api-reference).
 
 
-### Client Instantiation
-The SDK now exports a client class that you must instantiate to call various
-endpoints in our API. 
+
+## V3 Migrationsleitfaden
+> Das SDK wurde in Version 3 neu geschrieben und wird jetzt programmatisch aus unserer OpenAPI-Spezifikation generiert. Mit dieser Veröffentlichung
+> gibt es einige wesentliche Änderungen.
+
+### Client-Instantiierung
+Das SDK exportiert jetzt eine Client-Klasse, die du instanziieren musst, um verschiedene
+Endpunkte in unserer API aufzurufen.
+
+```python
+from elevenlabs.client import ElevenLabs
+
+client = ElevenLabs(api_key="...")
+
+
+Hier ist der übersetzte Teil des Textes im Markdown-Format auf Deutsch:
+
+```markdown
+## V3 Migrationsleitfaden
+> Das SDK wurde in Version 3 neu geschrieben und wird jetzt programmatisch aus unserer OpenAPI-Spezifikation generiert. Mit dieser Veröffentlichung
+> gibt es einige wesentliche Änderungen.
+
+### Client-Instantiierung
+Das SDK exportiert jetzt eine Client-Klasse, die du instanziieren musst, um verschiedene
+Endpunkte in unserer API aufzurufen.
 
 ```python
 from elevenlabs.client import ElevenLabs
 
 client = ElevenLabs(api_key="...")
 ```
-As part of this change, there is no longer a `set_api_key` and `get_api_key` method exported. 
+Als Teil dieser Änderung gibt es nicht mehr die Methoden `set_api_key` und `get_api_key`.
 
 ### HTTPX
-The SDK now uses httpx under the hood. This allows us to export an async client in addition to 
-a synchronous client. Note that you can pass in your own httpx client as well. 
+Das SDK verwendet jetzt unter der Haube HTTPX. Dies ermöglicht uns, neben einem synchronen Client auch einen asynchronen Client zu exportieren. Beachte, dass du auch deinen eigenen HTTPX-Client übergeben kannst.
 
 ```python
 from elevenlabs.client import AsyncElevenLabs
@@ -46,50 +64,26 @@ from elevenlabs.client import AsyncElevenLabs
 client = AsyncElevenLabs(api_key="...", httpx=httpx.AsyncClient(...))
 ```
 
-### Removing Static Methods
-There are no longer static methods exposed directly on objects. For example, 
-instead of `Models.from_api()` you can now do `client.models.get_all()`. 
+### Entfernen statischer Methoden
+Es gibt keine statischen Methoden mehr, die direkt auf Objekten verfügbar sind. Zum Beispiel
+anstatt `Models.from_api()` kannst du jetzt `client.models.get_all()` verwenden.
 
-The renames are specified below: 
+Die Umbenennungen sind unten aufgeführt:
 
   `User.from_api()` -> `client.users.get()`
 
   `Models.from_api()` -> `client.models.get_all()`
 
-  `Voices.from_api()` -> `client.voices.get_all()` 
+  `Voices.from_api()` -> `client.voices.get_all()`
 
-  `History.from_api()` -> `client.history.get_all()` 
+  `History.from_api()` -> `client.history.get_all()`
 
 
-### Maintaining Helper Methods
-The SDK continues to export methods for `generate`, `play`, `clone`, and
-`voices` which are detailed in the README below. 
-
-## 🗣️ Usage
-[![Open in Spaces](https://img.shields.io/badge/🤗-Open%20in%20Spaces-blue.svg)](https://huggingface.co/spaces/elevenlabs/tts)
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/gist/flavioschneider/49468d728a816c6538fd2f56b3b50b96/elevenlabs-python.ipynb)
-
-We support two main models: the newest `eleven_multilingual_v2`, a single foundational model supporting 29 languages including English, Chinese, Spanish, Hindi, Portuguese, French, German, Japanese, Arabic, Korean, Indonesian, Italian, Dutch, Turkish, Polish, Swedish, Filipino, Malay, Russian, Romanian, Ukrainian, Greek, Czech, Danish, Finnish, Bulgarian, Croatian, Slovak, and Tamil; and `eleven_monolingual_v1`, a low-latency model specifically trained for English speech.
-
-```py
-from elevenlabs import generate, play
-
-audio = generate(
-  text="Hello! 你好! Hola! नमस्ते! Bonjour! こんにちは! مرحبا! 안녕하세요! Ciao! Cześć! Привіт! வணக்கம்!",
-  voice="Rachel",
-  model="eleven_multilingual_v2"
-)
-
-play(audio)
+### Beibehaltung von Hilfsmethoden
+Das SDK exportiert weiterhin Methoden für `generate`, `play`, `clone` und
+`voices`, die im README unten detailliert beschrieben werden.
 ```
 
-<details> <summary> Play </summary>
-
-<i> Don't forget to unmute the player! </i>
-
-[audio (3).webm](https://github.com/elevenlabs/elevenlabs-python/assets/12028621/778fd3ed-0a3a-4d66-8f73-faee099dfdd6)
-
-</details>
 
 ## 🗣️ Voices
 
@@ -229,19 +223,19 @@ async def print_models() -> None:
 asyncio.run(print_models())
 ```
 
-## Elevenlabs module
-All of the ElevenLabs models are nested within the elevenlabs module. 
+## Elevenlabs-Modul
+Alle Modelle von ElevenLabs sind im `elevenlabs`-Modul eingebettet.
 
-![Alt text](assets/module.png)
+![Alt-Text](assets/module.png)
 
-## Languages Supported
+## Unterstützte Sprachen
 
-We support 29 languages and 100+ accents. Explore [all languages](https://elevenlabs.io/languages).
+Wir unterstützen 29 Sprachen und über 100 Akzente. Entdecke [alle Sprachen](https://elevenlabs.io/languages).
 
 <img src="https://github.com/elevenlabs/elevenlabs-js/blob/main/assets/languages.png" width="900">
 
-## Contributing
+## Mitwirkung
 
-While we value open-source contributions to this SDK, this library is generated programmatically. Additions made directly to this library would have to be moved over to our generation code, otherwise they would be overwritten upon the next generated release. Feel free to open a PR as a proof of concept, but know that we will not be able to merge it as-is. We suggest opening an issue first to discuss with us! 
+Obwohl wir Open-Source-Beiträge zu diesem SDK schätzen, wird diese Bibliothek programmatisch generiert. Direkte Ergänzungen zu dieser Bibliothek müssten in unseren Generierungscode übertragen werden, sonst würden sie bei der nächsten generierten Veröffentlichung überschrieben. Fühle dich frei, einen Pull Request als Proof of Concept zu öffnen, aber sei dir bewusst, dass wir ihn nicht so, wie er ist, zusammenführen können. Wir empfehlen, zunächst ein Issue zu öffnen, um mit uns zu diskutieren!
 
-On the other hand, contributions to the README are always very welcome!
+Andererseits sind Beiträge zur README immer sehr willkommen!
